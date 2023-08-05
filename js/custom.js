@@ -109,57 +109,81 @@ $(document).ready(function () {
     // Contact Form 	
 
     // validate contact form
-    $(function () {
-        $('#contact-form').validate({
-            rules: {
-                name: {
-                    required: true,
-                    minlength: 2
-                },
-                email: {
-                    required: true
-                },
-                phone: {
-                    required: false
-                },
-                message: {
-                    required: true
-                }
-
+    $('#contact-form').validate({
+        rules: {
+            name: {
+                required: true,
+                minlength: 2
             },
-            messages: {
-                name: {
-                    required: "This field is required",
-                    minlength: "your name must consist of at least 2 characters"
-                },
-                email: {
-                    required: "This field is required"
-                },
-                message: {
-                    required: "This field is required"
-                }
+            email: {
+                required: true
             },
-            submitHandler: function (form) {
-                $(form).ajaxSubmit({
-                    type: "POST",
-                    data: $(form).serialize(),
-                    url: "process.php",
-                    success: function () {
-                        $('#contact :input').attr('disabled', 'disabled');
-                        $('#contact').fadeTo("slow", 1, function () {
-                            $(this).find(':input').attr('disabled', 'disabled');
-                            $(this).find('label').css('cursor', 'default');
-                            $('#success').fadeIn();
-                        });
-                    },
-                    error: function () {
-                        $('#contact').fadeTo("slow", 1, function () {
-                            $('#error').fadeIn();
-                        });
-                    }
-                });
+            phone: {
+                required: false
+            },
+            message: {
+                required: true
             }
-        });
+        },
+        messages: {
+            name: {
+                required: "This field is required",
+                minlength: "Your name must consist of at least 2 characters"
+            },
+            email: {
+                required: "This field is required"
+            },
+            message: {
+                required: "This field is required"
+            }
+        },
+        submitHandler: function (form) {
+            var templateParams = $(form).serialize();
 
+            var formData = parseFormData(templateParams);
+
+
+            // Your EmailJS user ID and template ID
+
+            // Your EmailJS service ID, template ID, and public key
+            var emailJsServiceId = 'service_4znm4x6';
+            var emailJsTemplateId = 'template_r0xfjyk';
+            var emailJsPublicKey = 'JPRBW2J3CI51-OiRx'; // Include the public key here
+
+            // Send the email using EmailJS
+            emailjs.send(emailJsServiceId, emailJsTemplateId, formData, emailJsPublicKey)
+                .then(function(response) {
+                    // Email sent successfully
+                    $('#contact :input').attr('disabled', 'disabled');
+                    $('#contact').fadeTo("slow", 1, function () {
+                        $(this).find(':input').attr('disabled', 'disabled');
+                        $(this).find('label').css('cursor', 'default');
+                        $('#success').fadeIn();
+                    });
+                }, function(error) {
+                    // Error sending email
+                    $('#contact').fadeTo("slow", 1, function () {
+                        $('#error').fadeIn();
+                    });
+                });
+
+        }
     });
+
+    function parseFormData(template_params) {
+        var formData = {};
+        var params = template_params.split('&');
+
+        for (var i = 0; i < params.length; i++) {
+            var keyValue = params[i].split('=');
+            var key = decodeURIComponent(keyValue[0]);
+            var value = decodeURIComponent(keyValue[1].replace(/\+/g, ' ')); // Replace + with spaces
+            formData[key] = value;
+        }
+
+        return formData;
+    }
+
+
+
 });
