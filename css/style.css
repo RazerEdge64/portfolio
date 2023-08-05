@@ -40,6 +40,7 @@ h1 {
     font-family: 'Playfair Display', serif;
     font-size: 80px;
     line-height: 70px;
+    /*margin-top: 10px;*/
 }
 
 h4 {
@@ -50,6 +51,7 @@ h4 {
     color: #425BB5;
     margin-left: 40px;
     font-weight: 700;
+    /*margin-top: 10px;*/
 }
 
 h4:before {
@@ -282,20 +284,25 @@ a.active {
 ==================================================*/
 
 #home {
-    background: url(../img/home-bg-1.jpg);
+    background: url(../img/home-bg-1-blur.jpeg);
     background-size: cover;
     height: 100vh;
+    position: relative;
+    overflow: hidden;
+
 }
+
 
 .table-cell {
     display: table-cell;
     vertical-align: middle;
+    /*transform: translateY(-30px);*/
 }
 
 
 .disply-table {
     display: table;
-    height: 100vh;
+    height: 80vh;
 }
 
 
