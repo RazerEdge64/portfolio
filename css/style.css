@@ -40,7 +40,6 @@ h1 {
     font-family: 'Playfair Display', serif;
     font-size: 80px;
     line-height: 70px;
-    /*margin-top: 10px;*/
 }
 
 h4 {
@@ -284,6 +283,7 @@ a.active {
 ==================================================*/
 
 #home {
+    /*background: url(../img/home-bg-1-blur.jpeg);*/
     background: url(../img/home-bg-1-blur.jpeg);
     background-size: cover;
     height: 100vh;
